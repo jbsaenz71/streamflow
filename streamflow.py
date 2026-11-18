@@ -58,3 +58,13 @@ def plot_streamflow(dates, flows, sites):
 # I display the plot
 
 # NOTE: THE COMMENTS USED BEFORE TO EXPLAIN WHAT THE CODE IS DOING TO PLOT THE GRAPH OF THE DATA APPLIES HERE AS WELL.**
+# Main program
+
+sites = ["10163000", "10155200", "10155500",
+         "10154200", "10155000"]
+# Calls the first function and assigns it to dates, flows
+dates, flows = load_streamflow(
+    "June-2021-Provo-River-Streamflow-Rates.csv"
+)
+# Sends those variables to the plotting function
+plot_streamflow(dates, flows, sites)
