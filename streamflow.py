@@ -54,6 +54,9 @@ def plot_streamflow(dates, flows, sites):
     plt.xticks(rotation=45)
     plt.grid(True)
     plt.tight_layout()
+    # Plt saves the figure as a PNG file (image), then the plot is displayed
+    plt.savefig("provo_streamflow.png", dpi=150,
+            bbox_inches="tight")
     plt.show()
 # I display the plot
 
