@@ -104,3 +104,23 @@ dates, flows = load_streamflow(
 plot_streamflow(dates, flows, sites)
 summarize(dates, flows, sites)
 # I call the function to later execute it
+# input asks the user to enter a value. FLoat converts that value into a number that the code can use.
+# AI-assisted code: Counts readings above the
+# user's threshold and converts them to hours.
+
+threshold = float(input("Enter a flow threshold (cfs): "))
+
+print(f"\nHours above {threshold} cfs:")
+# I print the number of hours above the threshold for each site.
+for i in range(len(sites)):
+# I loop through each site to count the number of readings above the threshold and convert
+# that count to hours.
+    gauge_flows = flows[:, i]
+
+    count = np.sum(gauge_flows > threshold)
+
+    hours = count * 0.25
+
+    print(f"{sites[i]}: {hours:.2f} hours")
+    # I print the number of hours above the threshold for each site. The 
+    # result is formatted to two decimal places
