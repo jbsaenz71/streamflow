@@ -65,15 +65,12 @@ def plot_streamflow(dates, flows, sites):
 # I define a new function that summarizes various statistics about the data
 
 def summarize(dates, flows, sites):
-# I use f to input strings with values
     print(f"{'Gauge':<12}{'Max (cfs)':>10}"
           f"  {'Date of max':<22}"
           f"{'Min (cfs)':>10}{'Avg (cfs)':>12}")
-results = []
-# I use a for loop to iterate through the data to calculate the max, min, and 
-# average flow rate for each site. I also find the date of the max flow rate
-for i in range(len(sites)):
-
+    results = []
+    # I use a for loop to calculate the max, min, and average flow rate for each site.
+    for i in range(len(sites)):
         gauge_flows = flows[:, i]
 
         max_flow = np.max(gauge_flows)
@@ -83,19 +80,19 @@ for i in range(len(sites)):
         max_index = np.argmax(gauge_flows)
         max_date = dates[max_index]
         print(f"{sites[i]:<12}{max_flow:10.1f}"
-                      f"  {str(max_date):<22}"
-                      f"{min_flow:10.1f}{avg_flow:12.1f}")
-results.append({
-    "Gauge": sites[i],
-    "Max (cfs)": max_flow,
-    "Date of max": max_date,
-    "Min (cfs)": min_flow,
-    "Avg (cfs)": avg_flow
-    })
+              f"  {str(max_date):<22}"
+              f"{min_flow:10.1f}{avg_flow:12.1f}")
+        results.append({
+            "Gauge": sites[i],
+            "Max (cfs)": max_flow,
+            "Date of max": max_date,
+            "Min (cfs)": min_flow,
+            "Avg (cfs)": avg_flow
+        })
+
     # I make a data frame to save the summary as a csv
-summary_df = pd.DataFrame(results)
-summary_df.to_csv("streamflow_summary.csv",
-                  index=False)
+    summary_df = pd.DataFrame(results)
+    summary_df.to_csv("streamflow_summary.csv", index=False)
 # min_flow and avg_flow are calculated and their results have a width of 10 and 12 characters respectively, and are printed as decimals to one place
 sites = ["10163000", "10155200", "10155500",
          "10154200", "10155000"]
