@@ -1,4 +1,7 @@
-
+# AI STATEMENT: The following code was written by CHATGPT. I tried to understand it and make it better. 
+# I added comments to explain what each part of the code does. CHATPPT helped write some of the comments.
+# CHATGPT also added a function to save the summary of the streamflow data as a CSV file. 
+# COPILOT added a function to count the number of hours above a given threshold for each gauge in the flows array.
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -124,3 +127,38 @@ for i in range(len(sites)):
     print(f"{sites[i]}: {hours:.2f} hours")
     # I print the number of hours above the threshold for each site. The 
     # result is formatted to two decimal places
+
+
+# Threshold tests
+# I define a new function that counts the number of hours above a given
+# threshold for each gauge in the flows array.
+# The function takes in the flows array and the threshold value as arguments,
+# and return a list of hours above the threshold for each gauge.
+def hours_above_threshold(flows, threshold):
+    hours = []
+    for i in range(flows.shape[1]):
+        count = np.sum(flows[:, i] > threshold)
+        hours.append(count * 0.25)
+    return hours
+
+# AI STATEMENT: The following code below was written by COPILOT. I tried to underst
+# It tests the hours_above_the_threshold function with two boundary cases.
+# The first case checks that all gauges have 720 hours above a threshold of 0 cfs,
+# and the second case checks that all gauges have 0 hours above a threshold that is 
+# greater than the maximum flow in the dataset. If either of these assertions fails, 
+# an error message will be printed.
+# At threshold zero, any normal positive flow is above the threshold.
+zero_threshold_hours = hours_above_threshold(flows, 0)
+assert all(hours == 720 for hours in zero_threshold_hours), \
+    "Every gauge should be above 0 cfs for all 720 hours."
+
+# A threshold above the largest flow in the file must have zero hours
+# for every gauge.
+above_max_threshold = float(np.max(flows) + 1)
+above_max_hours = hours_above_threshold(flows, above_max_threshold)
+assert all(hours == 0 for hours in above_max_hours), \
+    "Every gauge should have 0 hours above a threshold above all flows."
+
+print("\nThreshold tests:")
+print("Threshold 0 cfs: all gauges have 720.0 hours")
+print(f"Threshold {above_max_threshold:.1f} cfs: all gauges have 0.0 hours")
